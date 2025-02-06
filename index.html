@@ -52,8 +52,18 @@
         // JavaScript to handle loading and displaying the iframe
         const iframe = document.getElementById('scratch-iframe');
         const loadingScreen = document.getElementById('loading-screen');
+        window.addEventListener('message', function(event) {
+            if (event.origin !== 'https://scratch.mit.edu') {
+              return;
+            }
 
-        // Listen for when the iframe finishes loading
+            // Check the message data for 'scratch' status
+            if (event.data === 'scratchLoaded') {
+              console.log("The Scratch project has finished loading and the loading screen is gone!");
+              // Now you can trigger any actions you need when it's fully loaded
+            }
+        });
+                // Listen for when the iframe finishes loading
         iframe.onload = function() {
             // Hide the loading screen and show the iframe (Scratch project is now fully loaded)
             loadingScreen.style.display = 'none';
