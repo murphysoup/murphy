@@ -51,23 +51,42 @@
     <script>
         // JavaScript to handle loading and displaying the iframe
         const iframe = document.getElementById('scratch-iframe');
+        var iframeahh = document.getElementById('scratch-embed');
         const loadingScreen = document.getElementById('loading-screen');
-        window.addEventListener('message', function(event) {
-            if (event.origin !== 'https://scratch.mit.edu') {
-              return;
-            }
+        <iframe id="scratch-embed" src="https://scratch.mit.edu/projects/PROJECT_ID/embed/" frameborder="0" allowtransparency="true" width="485" height="402"></iframe>
 
-            // Check the message data for 'scratch' status
-            if (event.data === 'scratchLoaded') {
-              console.log("The Scratch project has finished loading and the loading screen is gone!");
-              // Now you can trigger any actions you need when it's fully loaded
-            }
-        });
-                // Listen for when the iframe finishes loading
+<script>
+  var iframe = document.getElementById('scratch-embed');
+  
+  // This function checks whether the Scratch project has finished loading
+  function checkLoadingStatus() {
+    try {
+      // Check if the iframe content window is accessible (no cross-origin restrictions)
+      var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      if (iframeDocument) {
+        // Look for an element that indicates loading has completed
+        var loadingElement = iframeDocument.querySelector('.loading');
+        
+        if (!loadingElement) {
+          // If the loading element is no longer present, the project is ready
+          console.log("The Scratch project is ready (loading screen disappeared)!");
+          clearInterval(loadingCheckInterval);  // Stop checking once loaded
+        }
+      }
+    } catch (e) {
+      // Handle any errors, most likely due to cross-origin issues
+      console.log("Unable to access iframe contents. Polling will continue.");
+    }
+  }
+
+  // Start polling the iframe at intervals
+  var loadingCheckInterval = setInterval(checkLoadingStatus, 1000);  // Check every second
+
+            Listen for when the iframe finishes loading
         iframe.onload = function() {
             // Hide the loading screen and show the iframe (Scratch project is now fully loaded)
             loadingScreen.style.display = 'none';
-            iframe.style.display = 'block';
+            iframea.style.display = 'block';
         };
 
         // Dynamically load the iframe URL after the page loads
