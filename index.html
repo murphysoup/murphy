@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Scratch communism</title>
+    <title>Your Scratch Project</title>
     <style>
         /* Full-screen background and centering */
         body, html {
@@ -31,8 +31,8 @@
 
         /* Style for the Scratch project iframe */
         #scratch-iframe {
-            width: 100vw;
-            height: 100vh;
+            width: 300vw;
+            height: 300vh;
             border: none;
             display: none;  /* Hide initially */
         }
@@ -46,12 +46,20 @@
     </div>
 
     <!-- Scratch Project Embed -->
-    <iframe id="scratch-iframe" src="https://scratch.mit.edu/projects/1129378732/embed" allowtransparency="true"></iframe>
+    <iframe id="scratch-iframe" allowtransparency="true"></iframe>
 
     <script>
         // JavaScript to handle loading and displaying the iframe
         const iframe = document.getElementById('scratch-iframe');
         const loadingScreen = document.getElementById('loading-screen');
+
+        // Set the URL for the Scratch project
+        const projectURL = "https://scratch.mit.edu/projects/1129378732/embed"; // Replace PROJECT_ID with your actual project ID
+
+        // Dynamically load the iframe with the project URL after the page is fully loaded
+        window.onload = function() {
+            iframe.src = projectURL;
+        };
 
         // Listen for when the iframe finishes loading
         iframe.onload = function() {
@@ -59,9 +67,6 @@
             loadingScreen.style.display = 'none';
             iframe.style.display = 'block';
         };
-
-        // Dynamically load the iframe URL
-        iframe.src = "https://scratch.mit.edu/projects/1129378732/embed"; // Replace PROJECT_ID with your actual project ID
     </script>
 
 </body>
