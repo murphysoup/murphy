@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Scr</title>
+    <title>Your Scratch Project</title>
     <style>
         /* Full-screen background and centering */
         body, html {
@@ -53,19 +53,38 @@
         const iframe = document.getElementById('scratch-iframe');
         const loadingScreen = document.getElementById('loading-screen');
 
-        // Listen for when the iframe finishes loading (Scratch's default loading screen disappears)
-        iframe.onload = function() {
-            // Hide the custom loading screen and show the iframe (Scratch project is now fully loaded)
-            loadingScreen.style.display = 'none';
-            iframe.style.display = 'block';
-        };
+        // Function to check if Scratch project has finished loading
+        function checkScratchLoaded() {
+            try {
+                // Access the iframe's document object
+                const iframeDocument = iframe.contentWindow.document;
+                
+                // Check if the "stage" element has appeared in the iframe, indicating the Scratch project is loaded
+                if (iframeDocument.querySelector('canvas')) {
+                    // If the canvas (stage) is found, the Scratch project has loaded
+                    loadingScreen.style.display = 'none';  // Hide the custom loading screen
+                    iframe.style.display = 'block';         // Show the iframe (project)
+                }
+            } catch (error) {
+                // Catch errors if cross-origin restrictions block access to iframe content
+                console.log('Scratch iframe not ready yet:', error);
+            }
+        }
 
-        // Set the iframe source URL after the page loads (this starts loading the Scratch project)
+        // Dynamically load the iframe URL after the page loads
         window.onload = function() {
-            // Add a delay to ensure the page loads first, then start loading the Scratch project
+            // Set the iframe source to start loading the Scratch project
+            iframe.src = "https://scratch.mit.edu/projects/1129378732/embed"; // Replace PROJECT_ID with your actual project ID
+
+            // Start periodically checking for the Scratch project load
+            const checkInterval = setInterval(function() {
+                checkScratchLoaded();
+            }, 500); // Check every 500 milliseconds (adjust as needed)
+
+            // If the Scratch project loaded successfully, stop checking after a reasonable time
             setTimeout(function() {
-                iframe.src = "https://scratch.mit.edu/projects/1129378732/embed"; // Replace PROJECT_ID with your actual project ID
-            }, 200); // Small delay to give time for page load
+                clearInterval(checkInterval);  // Stop the periodic checking
+            }, 10000); // Timeout after 10 seconds (adjust if needed)
         };
     </script>
 
