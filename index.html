@@ -58,12 +58,14 @@
             try {
                 // Access the iframe's document object
                 const iframeDocument = iframe.contentWindow.document;
-                
+                console.log('Sror');
                 // Check if the "stage" element has appeared in the iframe, indicating the Scratch project is loaded
                 if (iframeDocument.querySelector('canvas')) {
+                    console.log('Seeeeror');
                     // If the canvas (stage) is found, the Scratch project has loaded
                     loadingScreen.style.display = 'none';  // Hide the custom loading screen
-                    iframe.style.display = 'block';         // Show the iframe (project)
+                    iframe.style.display = 'block';      
+                    console.log('bSroer');// Show the iframe (project)
                 }
             } catch (error) {
                 // Catch errors if cross-origin restrictions block access to iframe content
