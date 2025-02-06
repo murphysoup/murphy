@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your  Project</title>
+    <title>Your Scr</title>
     <style>
         /* Full-screen background and centering */
         body, html {
@@ -46,26 +46,26 @@
     </div>
 
     <!-- Scratch Project Embed -->
-    <iframe id="scratch-iframe" allowtransparency="true"></iframe>
+    <iframe id="scratch-iframe" src="https://scratch.mit.edu/projects/1129378732/embed" allowtransparency="true"></iframe>
 
     <script>
         // JavaScript to handle loading and displaying the iframe
         const iframe = document.getElementById('scratch-iframe');
         const loadingScreen = document.getElementById('loading-screen');
 
-        // Set the URL for the Scratch project
-        const projectURL = "https://scratch.mit.edu/projects/1129378732/embed"; // Replace PROJECT_ID with your actual project ID
-
-        // Dynamically load the iframe with the project URL after the page is fully loaded
-        window.onload = function() {
-            iframe.src = projectURL;
-        };
-
-        // Listen for when the iframe finishes loading
+        // Listen for when the iframe finishes loading (Scratch's default loading screen disappears)
         iframe.onload = function() {
-            // Hide the loading screen and show the iframe
+            // Hide the custom loading screen and show the iframe (Scratch project is now fully loaded)
             loadingScreen.style.display = 'none';
             iframe.style.display = 'block';
+        };
+
+        // Set the iframe source URL after the page loads (this starts loading the Scratch project)
+        window.onload = function() {
+            // Add a delay to ensure the page loads first, then start loading the Scratch project
+            setTimeout(function() {
+                iframe.src = "https://scratch.mit.edu/projects/1129378732/embed"; // Replace PROJECT_ID with your actual project ID
+            }, 200); // Small delay to give time for page load
         };
     </script>
 
